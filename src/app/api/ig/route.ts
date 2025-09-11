@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { IgApiClient } from "instagram-private-api";
 
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
