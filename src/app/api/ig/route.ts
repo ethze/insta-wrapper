@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     });
 
     if (!res.ok) {
-      const text = await res.text(); // ambil response body untuk debugging
+      const text = await res.text();
       return NextResponse.json(
         { error: `Failed to fetch user: ${res.status} - ${text}` },
         { status: res.status }
@@ -34,13 +34,7 @@ export async function GET(req: NextRequest) {
 
     const data = await res.json();
 
-    // A-Z
-    const sortedData: Record<string, unknown> = {};
-    Object.keys(data)
-      .sort((a, b) => a.localeCompare(b))
-      .forEach((k) => (sortedData[k] = data[k]));
-
-    return NextResponse.json({ data: sortedData }, { status: 200 });
+    return NextResponse.json({ data }, { status: 200 });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ error: message }, { status: 500 });
