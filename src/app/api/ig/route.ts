@@ -42,18 +42,6 @@ export async function GET(req: NextRequest) {
 
     const rawUser = response.body.user;
 
-    // --- IMPORTANT DATA (fixed order, jangan di-sort) ---
-    const important = {
-      "Nama Lengkap": rawUser.full_name || "-",
-      "Follower Count": rawUser.follower_count || 0,
-      "Following Count": rawUser.following_count || 0,
-      "Post Count": rawUser.media_count || 0,
-      Private: rawUser.is_private ? "private is ON." : "private is OFF.",
-      "Spam Settings": rawUser.has_chaining
-        ? "Spam filter is ON."
-        : "Spam filter is OFF.",
-    };
-
     // --- SORT ALL KEYS A-Z untuk full data ---
     const sortedUser: Record<string, any> = {};
     Object.keys(rawUser)
@@ -65,7 +53,7 @@ export async function GET(req: NextRequest) {
     // return both important info & full sorted data
     return NextResponse.json(
       {
-        important, // tampil duluan biar cepat dibaca
+        // important, // tampil duluan biar cepat dibaca
         data: sortedUser, // full raw sorted A-Z
       },
       { status: 200 }
